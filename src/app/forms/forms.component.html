@@ -1,0 +1,67 @@
+<div class="container-fluid">
+  <h1> Template Driven Form </h1>
+  <form #userForm="ngForm" novalidate (ngSubmit)="onSubmit()">
+    <pre> {{ userForm.value | json }} </pre>
+    <div class="form-group">
+      <label for="userName">Name:
+        <input type="text" class="form-control" id="userName" name="userName" [(ngModel)]="userModel.name"
+          #name="ngModel" [class.is-invalid]="name.invalid && name.touched" required>
+        <p> {{ name.untouched }} </p>
+        <!-- validation -->
+      </label>
+      <small [class.d-none]="name.valid || name.untouched" class="text-danger"> Name is required</small>
+
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email:
+        <input type="email" class="form-control" id="email" name="email" #email1="ngModel" 
+        [(ngModel)]="userModel.email" [class.is-invalid]="email1.invalid && email1.touched">
+        <p> {{ email1.untouched }} </p>
+        <!-- @, . -->
+      </label>
+      <small [class.d-none]="email1.valid || email1.untouched" class="text-danger"> Email is in a wrong type</small>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone:
+        <input type="tel" class="form-control" id="phone" name="phone" [(ngModel)]="userModel.phone" pattern="^\d{10}$"
+          #phone="ngModel" required>
+      </label>
+      <div *ngIf="phone.invalid || phone.touched">
+        <small class="text-danger" *ngIf="phone.hasError('required')">Phone number is required</small>
+        <small class="text-danger" *ngIf="phone.hasError('pattern')">Phone number must be 10 digits</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <select class="custom-select" name="topic" [(ngModel)]="userModel.topic" (blue)="validateTopic(topic.value)"
+        (change)="validateTopic(topic.value)" #topic="ngModel" [class.is-invalid]="topicHasError && topic.touched">
+        <option selected value="default">I'm interested in..</option>
+        <option *ngFor="let topic of topics"> {{ topic }} </option>
+      </select>
+    </div>
+
+    <div ngModelGroup="address">
+      <div class="form-group">
+        <label>Street
+          <input type="text" name="street" ngModel>
+        </label>
+      </div>
+      <div class="form-group">
+        <label>City
+          <input type="text" name="city" ngModel>
+        </label>
+      </div>
+      <div class="form-group">
+        <label>State
+          <input type="text" name="state" ngModel>
+        </label>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit" [disabled]="userForm.form.invalid || topicHasError">Submit
+      Form</button>
+
+  </form>
+</div>

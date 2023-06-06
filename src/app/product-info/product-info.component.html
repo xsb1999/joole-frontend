@@ -1,0 +1,247 @@
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/search">
+            <img src="../../assets/pics/joolePic.png" style="width: 68%">
+        </a>    
+  
+        <!-- Search input -->
+        <form class="d-flex">
+            <div class="input-group">
+                <select class="custom-select" style="width: 120px; border-radius: 3px; height: 43px;">
+                    <option value="1">HVAC Fans</option>
+                  </select>
+                <input style="width: 520px;" class="form-control me-2" type="search" placeholder="Advanced Search..." aria-label="Search">
+                <button style="margin-left: -8px;" class="btn btn-primary" type="submit" disabled>Search</button>
+            </div>
+        </form>
+        <div class="d-flex">
+            <button (click)="logOut()" style="float: right; margin-right: 40px" class="btn btn-dark">Log Out</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <div style="margin-left: 18px; margin-top: 16px; color: #3b5998; font-weight: bold;">
+    Mechanical > {{productDetail.series}} > <span style="color: #999;">{{productDetail.model}}</span> 
+    <hr>
+  </div>
+  
+  <div style="margin-left: 18px;">
+    <span>
+        <img style="width: 6%;" [src]="productDetail.manufacturer==='Emerson'?img1:(productDetail.manufacturer==='Minka'?img2:(productDetail.manufacturer==='Westinghouse'?img3:img4))" alt="Product Image">
+    </span>
+    Mechanical > {{productDetail.series}} > {{productDetail.model}}
+    <span style="margin-left: 30px; color: red;">
+        Past specifications: {{productDetail.manufacturer==='Emerson'?'10 / 1492':(productDetail.manufacturer==='Minka'?'8 / 1132':(productDetail.manufacturer==='Westinghouse'?'4 / 838':'0 / 1297'))}}
+    </span>
+    <button style="float: right; margin-right: 55px;" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="sr-only">Add to </span>
+      </button>
+  </div>
+
+  
+  <div class="container mt-4">
+    <nav id="productNavbar">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="activeSection === 'summary'" (click)="scrollToSection('summary')" style="cursor: pointer;">Product Summary</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="activeSection === 'details'" (click)="scrollToSection('details')" style="cursor: pointer;">Product Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [class.active]="activeSection === 'documentation'" (click)="scrollToSection('documentation')" style="cursor: pointer;">Product Documentation</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [class.active]="activeSection === 'contact'" (click)="scrollToSection('contact')" style="cursor: pointer;">Contact</a>
+          </li>
+      </ul>
+    </nav>
+    <br>
+    <div class="scrollspy-example" data-bs-spy="scroll" data-bs-target="#productNavbar" data-bs-offset="0">
+      <div id="summary" class="section">
+        <h4 style="color: #4b5f88; font-weight: bold;">Product Summary</h4>
+        <hr>
+        <div class="row">
+            <div class="col-lg-6">
+              <h6>DESCRIPTION</h6>
+              <table class="table table-striped">
+                <tr style="border-top: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Manufacturer</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.manufacturer}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Series</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.series}}</td>
+                </tr>
+                <tr style="border-bottom: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Model</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.model}}</td>
+                </tr>
+              </table>
+
+              <h6 style="margin-top: -5px; margin-bottom: auto;">TYPE</h6>
+              <table class="table table-striped">
+                <tr style="border-top: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Use Type</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.type}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Application</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.application}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Mounting Location</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.mountingLocation
+                    }}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Accessories</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.accessories}}</td>
+                </tr>
+                <tr style="border-bottom: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Model year</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.modelYear | slice:0:4}}</td>
+                </tr>
+              </table>
+
+            </div>
+            <div class="col-lg-6">
+              <h6>TECHNICAL SPECIFICATIONS</h6>
+              <table class="table table-striped">
+                <tr style="border-top: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Airflow (CFM)</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.airflow}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Power (W)</td>
+                    <td style="background-color: #eee; padding: 5px; width: 18%;">Min</td>
+                    <td style="border-bottom: 1px solid #dee2e6; border-top: 1px solid #dee2e6;">&nbsp;{{ productDetail.powerMin}}</td>
+                    <td style="background-color: #eee; padding: 5px; width: 18%;">Max</td>
+                    <td style="border-bottom: 1px solid #dee2e6; border-top: 1px solid #dee2e6;">&nbsp;{{ productDetail.power}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Operating voltage (VAC)</td>
+                    <td style="background-color: #eee; padding: 5px; width: 18%;">Min</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.operatingVoltageMin}}</td>
+                    <td style="background-color: #eee; padding: 5px; width: 18%;">Max</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.operatingVoltage}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Fan speed (RPM)</td>
+                    <td style="background-color: #eee; padding: 5px; width: 18%; border-bottom: 1px solid #dee2e6;">Min</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.fanSpeedMin}}</td>
+                    <td style="background-color: #eee; padding: 5px; width: 18%; border-bottom: 1px solid #dee2e6;">Max</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.fanSpeed}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Number of fan speeds</td>
+                    <td colspan="4" style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.fanSpeedNum}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Sound at max speed (dBA)</td>
+                    <td colspan="4" style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.sound}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Fan sweep diameter (in)</td>
+                    <td colspan="4" style="border-bottom: 1px solid #dee2e6;">&nbsp;{{ productDetail.diameter}}</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Height (in)</td>
+                    <td style="background-color: #eee; padding: 5px; width: 18%;">Min</td>
+                    <td style="border-bottom: 1px solid #dee2e6;border-top: 1px solid #dee2e6;">&nbsp;{{ productDetail.heightMin}}</td>
+                    <td style="background-color: #eee; padding: 5px; width: 18%;">Max</td>
+                    <td style="border-bottom: 1px solid #dee2e6;border-top: 1px solid #dee2e6;">&nbsp;{{ productDetail.height}}</td>
+                </tr>
+                <tr style="border-bottom: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Weight (lbs)</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp; {{productDetail.weight}}</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+        
+      </div>
+      <br>
+      <div id="details" class="section">
+        <h4 style="color: #4b5f88; font-weight: bold;">Product Details</h4>
+        <hr>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>
+                    <h6>SERIES INFORMATION</h6>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let row of rows; let i = index">
+                <tr style="padding: 0.75rem; font-size: 0.9rem; font-weight: 500;" [class.even-row]="i % 2 === 0" [class.odd-row]="i % 2 !== 0">
+                  <td style="vertical-align: top;">{{ row }}</td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+      </div>
+      <br>
+      <div id="documentation" class="section">
+        <h4 style="color: #4b5f88; font-weight: bold;">Product Documentation</h4>
+        <hr>
+        <img src="../../assets/pics/product_documentation.JPG" width="82.5%">
+      </div>
+      <br>
+      <div id="contact" class="section">
+        <h4 style="color: #4b5f88; font-weight: bold;">Contact</h4>
+        <hr>
+        <div class="row">
+            <div class="col-lg-6">
+              <h6>SALES REPRESENTATIVE</h6>
+              <table class="table table-striped">
+                <tr style="border-top: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Name</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;Marty McFly</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Phone</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;+1 650 889 6222</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Email</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;marty@mcfly.com</td>
+                </tr>
+                <tr style="border-bottom: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Web</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;http://www.test.com</td>
+                </tr>
+              </table>
+
+            </div>
+            <div class="col-lg-6">
+              <h6>MANUFACTURER</h6>
+              <table class="table table-striped">
+                <tr style="border-top: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Department</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;Technical Support</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Phone</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;+1 800 466 8200</td>
+                </tr>
+                <tr>
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Email</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;techsupport@fan.com</td>
+                </tr>   
+                <tr style="border-bottom: 2px solid #ccc;">
+                    <td style="background-color: #eee; padding: 5px; width: 36%;">Web</td>
+                    <td style="border-bottom: 1px solid #dee2e6;">&nbsp;http://www.fan.com</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <br><br><br>

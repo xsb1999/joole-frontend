@@ -1,0 +1,33 @@
+<button (click)="logOut()" style="float: right; margin-top: -60px; margin-right: 60px" class="btn btn-dark">Log Out</button>
+<div class="container-fluid" style="width: 40%">
+    <div style="display: flex; flex-direction: column; margin-bottom: 45px; margin-top: 100px">
+        <img src="../../assets/pics/joolePic.png" style="vertical-align:middle; width: 75%; margin: 0 auto;">
+        <b style="margin-top: 20px; color: rgba(0, 0, 0, 0.4); text-align:center; font-size: 25px;">Building Product Selection Platform</b>
+    </div>
+
+    <div class="input-group">
+        <select class="custom-select" style="width: 115px; border-radius: 5px; height: 56px;">
+          <option selected disabled>Choose...</option>
+          <option value="1">Mechanical</option>
+        </select>
+        <div class="input-group-append">
+        <form [formGroup]="searchForm">
+          <mat-form-field style="width: 451px;">
+            <input matInput formControlName="searchText" placeholder="Search products" [matAutocomplete]="auto" />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{ option }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <button class="btn btn-outline-secondary" type="button" (click)="search()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="dark" class="bi bi-search" viewBox="0 0 19 19">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+              </svg>
+          </button>
+        </form>
+      </div>
+      </div>
+    
+  
+  </div>

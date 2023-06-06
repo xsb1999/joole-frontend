@@ -1,0 +1,446 @@
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/search">
+            <img src="../../assets/pics/joolePic.png" style="width: 68%">
+        </a>    
+  
+        <!-- Search input -->
+        <form class="d-flex">
+            <div class="input-group">
+                <select class="custom-select" style="width: 120px; border-radius: 3px; height: 43px;">
+                    <option value="1">HVAC Fans</option>
+                  </select>
+                <input style="width: 520px;" class="form-control me-2" type="search" placeholder="Advanced Search..." aria-label="Search">
+                <button style="margin-left: -8px;" class="btn btn-primary" type="submit" data-bs-toggle="modal" data-bs-target="#searchModal">Search</button>
+                
+                <button style="margin-left: 4px;" class="btn btn-primary" type="submit" (click)="reset()">Reset</button>
+            </div>
+        </form>
+        <div class="d-flex">
+            <button (click)="logOut()" style="float: right; margin-right: 40px" class="btn btn-dark">Log Out</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3 sidebar">
+        <div class="accordion" id="accordionExample">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                    <div>
+                        Product Type
+                            <a style="margin-left: 54.5%;" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1" (click)="toggleArrowRotation1()">
+                                <span [ngClass]="{'rotate-90': arrowRotated1}">></span>
+                            </a>
+                    </div>
+                      <div class="collapse" id="collapseExample1">
+                        <div class="card card-body">
+                            <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Model year:</span>
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="my1" [(ngModel)]="searchInfo.yearStart">
+                                <span>&nbsp; — &nbsp;</span>
+                                <input type="text" class="form-control" name="my2" [(ngModel)]="searchInfo.yearEnd">
+                              </div>
+                        </div>
+                      </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <div>
+                    Technical Specifications
+                        <a style="margin-left: 31%;" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2" (click)="toggleArrowRotation2()">
+                            <span [ngClass]="{'rotate-90': arrowRotated2}">></span>
+                        </a>
+                </div>
+                  <div class="collapse" id="collapseExample2">
+                    <div class="card card-body">
+                        <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Airflow (CFM)</span>
+                        <span>{{ minValue1 }}</span>
+                        <div class="range-slider">
+                            <input type="range" min={{minAirflow}} max={{maxAirflow}} value={{minAirflow}} class="thumb1" id="t1-1" (input)="updateRangeValues('t1-1','t1-2',1)">
+                            <input type="range" min={{minAirflow}} max={{maxAirflow}} value={{maxAirflow}} class="thumb2" id="t1-2" (input)="updateRangeValues('t1-1','t1-2',1)">
+                            <span style="float: right;">{{ maxValue1 }}</span>
+                        </div><br>
+                          <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Max power (W)</span>
+                          <span>{{ minValue2 }}</span>
+                        <div class="range-slider">
+                            <input type="range" min={{minPower}} max={{maxPower}} value={{minPower}} class="thumb1" id="t2-1" (input)="updateRangeValues('t2-1','t2-2',2)">
+                            <input type="range" min={{minPower}} max={{maxPower}} value={{maxPower}} class="thumb2" id="t2-2" (input)="updateRangeValues('t2-1','t2-2',2)">
+                            <span style="float: right;">{{ maxValue2 }}</span>
+                          </div><br>
+                          <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Sound at max speed (dBA)</span>
+                          <span>{{ minValue3 }}</span>
+                          <div class="range-slider">
+                            <input type="range" min={{minSound}} max={{maxSound}} value={{minSound}} class="thumb1" id="t3-1" (input)="updateRangeValues('t3-1','t3-2',3)">
+                            <input type="range" min={{minSound}} max={{maxSound}} value={{maxSound}} class="thumb2" id="t3-2" (input)="updateRangeValues('t3-1','t3-2',3)">
+                            <span style="float: right;">{{ maxValue3 }}</span>
+                          </div><br>
+                          <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Fan sweep diameter (in)</span>
+                          <span>{{ minValue4 }}</span>
+                          <div class="range-slider">
+                            <input type="range" min={{minDiameter}} max={{maxDiameter}} value={{minDiameter}} class="thumb1" id="t4-1" (input)="updateRangeValues('t4-1','t4-2',4)">
+                            <input type="range" min={{minDiameter}} max={{maxDiameter}} value={{maxDiameter}} class="thumb2" id="t4-2" (input)="updateRangeValues('t4-1','t4-2',4)">
+                            <span style="float: right;">{{ maxValue4 }}</span>
+                          </div><br>
+                          <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Fan sweep diameter (in)</span>
+                          <span>{{ minValue5 }}</span>
+                          <div class="range-slider">
+                            <input type="range" min={{minDiameter}} max={{maxDiameter}} value={{minDiameter}} class="thumb1" id="t5-1" (input)="updateRangeValues('t5-1','t5-2',5)">
+                            <input type="range" min={{minDiameter}} max={{maxDiameter}} value={{maxDiameter}} class="thumb2" id="t5-2" (input)="updateRangeValues('t5-1','t5-2',5)">
+                            <span style="float: right;">{{ maxValue5 }}</span>
+                          </div><br>
+                    </div>
+                  </div>
+              </div>  
+            </div>
+            <div class="card">
+              <div class="card-header" id="headingThree">
+                <div>
+                    Brand
+                        <a style="margin-left: 71.5%;" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3" (click)="toggleArrowRotation3()">
+                            <span [ngClass]="{'rotate-90': arrowRotated3}">></span>
+                        </a>
+                </div>
+                  <div class="collapse" id="collapseExample3">
+                    <div class="card card-body">
+                        <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Brand:</span>
+                        <input type="text" class="form-control" value="HVAC Fans">
+                    </div>
+                  </div>
+              </div>
+            </div>
+            <div class="card">
+                <div class="card-header" id="headingThree">
+                  <div>
+                    Past Selections
+                          <a style="margin-left: 51%;" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample4" role="button" aria-expanded="false" aria-controls="collapseExample4" (click)="toggleArrowRotation4()">
+                              <span [ngClass]="{'rotate-90': arrowRotated4}">></span>
+                          </a>
+                  </div>
+                    <div class="collapse" id="collapseExample4">
+                      <div class="card card-body">
+                        <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Firm</span>
+                        <span>{{ minValue6 }}%</span>
+                        <div class="range-slider">
+                            <input type="range" min="0" max="100" value="25" class="thumb1" id="t6-1" (input)="updateRangeValues('t6-1','t6-2',6)">
+                            <input type="range" min="0" max="100" value="75" class="thumb2" id="t6-2" (input)="updateRangeValues('t6-1','t6-2',6)">
+                            <span style="float: right;">{{ maxValue6 }}%</span>
+                        </div><br>
+                        <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Global</span>
+                        <span>{{ minValue7 }}%</span>
+                        <div class="range-slider">
+                            <input type="range" min="0" max="100" value="25" class="thumb1" id="t7-1" (input)="updateRangeValues('t7-1','t7-2',7)">
+                            <input type="range" min="0" max="100" value="75" class="thumb2" id="t7-2" (input)="updateRangeValues('t7-1','t7-2',7)">
+                            <span style="float: right;">{{ maxValue7 }}%</span>
+                        </div><br>
+                      </div>
+                    </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header" id="headingThree">
+                  <div>
+                    Certifications
+                          <a style="margin-left: 55%;" class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample5" role="button" aria-expanded="false" aria-controls="collapseExample5" (click)="toggleArrowRotation5()">
+                              <span [ngClass]="{'rotate-90': arrowRotated5}">></span>
+                          </a>
+                  </div>
+                    <div class="collapse" id="collapseExample5">
+                        <div class="card card-body">
+                            <span style="color: rgba(0, 0, 0, 0.6); font-weight: bold;">Certifications:</span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+          
+      </div>
+  
+      <!-- Product Display Area -->
+      
+      <div class="col-lg-9">
+        <button style="margin-bottom: 10px;" class="btn btn-primary" (click)="compare()">Compare</button>
+        
+        <div class="row">
+          <div class="col-md-3 mb-3" *ngFor="let product of productList; let i = index">
+            <div class="card">
+              <img [src]="product.manufacturer==='Emerson'?img1:(product.manufacturer==='Minka'?img2:(product.manufacturer==='Westinghouse'?img3:img4))" class="card-img-top button-like" alt="Product Image 1" (click)="goToProductInfo(product)">
+              <div class="card-body" style="text-align: center;">
+                <div style="color: #0c336e; font-weight: bold;">
+                    <p>{{product.manufacturer}}</p>
+                    <p>{{product.series}}</p>
+                    <p>{{product.model}}</p>
+                </div>
+                <div class="card-body" style="background-color: #eee; text-align: center;">
+                    <div>
+                        <p>{{product.airflow}} CFM</p>
+                        <p>{{product.power}} W at max speed</p>
+                        <p>{{product.fanSpeed}} dBA at max speed</p>
+                        <p>{{product.fanSpeed}}" fan sweep diameter</p>
+                    </div>
+              </div>
+              <div class="card-body" style="text-align: center;">
+                <p style="color: red;">Past specifications:</p>
+                <p style="color: red;">{{i===0?"10 firm / 1492 global":(i===1?"8 firm / 1132 global":(i===2?"4 firm / 838 global":"0 firm / 1297 global"))}}</p>
+          </div>
+          <div class="card-body">
+            <div class="form-check">
+                <label style="margin-left: -35px;" class="form-check-label" for="flexCheckDefault">
+                    Compare
+                  </label>
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" [(ngModel)]="product.isSelected" (change)="onProductSelected(product)">
+                <button style="float: right; margin-top: -6px;" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="sr-only">Add to </span>
+                  </button>
+              </div>
+          </div>
+            </div>
+          </div>
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+
+<!-- Search Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="searchModalLabel">Find Fans</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label style="font-size: 110%;">Type</label>
+            <hr>
+            <div class="row">
+              <div class="col">
+                <label class="form-label">Use Type</label>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input [(ngModel)]="searchInfo.type" class="form-check-input" type="radio" id="commercial" name="useType" value="Commercial" checked>
+                  <label class="form-check-label" for="keyword1">Commercial</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input [(ngModel)]="searchInfo.type" class="form-check-input" type="radio" id="industrial" value="Industrial" name="useType">
+                  <label class="form-check-label" for="keyword1">Industrial</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input [(ngModel)]="searchInfo.type" class="form-check-input" type="radio" id="residential" value="Residential" name="useType">
+                  <label class="form-check-label" for="keyword1">Residential</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">Application</label>
+              </div>
+              <div class="col-md-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="indoor" name="Application" value="Indoor" [(ngModel)]="searchInfo.application" checked>
+                  <label class="form-check-label" for="keyword1">Indoor</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="outdoor" value="Outdoor" [(ngModel)]="searchInfo.application" name="Application">
+                  <label class="form-check-label" for="keyword1">Outdoor</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label class="form-label">Mounting Location</label>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="roof" name="Mounting" value="Roof" [(ngModel)]="searchInfo.mountingLocation" checked>
+                  <label class="form-check-label" for="keyword1">Roof</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="wall" value="Wall" [(ngModel)]="searchInfo.mountingLocation" name="Mounting">
+                  <label class="form-check-label" for="keyword1">Wall</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="freeStanding" value="Free Standing" [(ngModel)]="searchInfo.mountingLocation" name="Mounting">
+                  <label class="form-check-label" for="keyword1">Free Standing</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-3">
+                <label class="form-label">Accessories</label>
+              </div>
+              <div class="col-md-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="withLight" name="Accessories" value="With light" [(ngModel)]="searchInfo.accessories" checked>
+                  <label class="form-check-label" for="keyword1">With light</label>
+                </div>
+              </div>
+              <div class="col">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" id="withoutLight" value="Without light" [(ngModel)]="searchInfo.accessories" name="Accessories">
+                  <label class="form-check-label" for="keyword1">Without light</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <label class="form-label">Model Year</label>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" id="abc" placeholder="From" [(ngModel)]="searchInfo.yearStart" name="yearStart">
+              </div>
+              --
+              <div class="col">
+                <input type="text" class="form-control" placeholder="To" [(ngModel)]="searchInfo.yearEnd" name="yearEnd">
+              </div>
+            </div>
+
+          </div>
+          <hr>
+          
+          <div class="mb-3">
+            <label style="font-size: 110%;">Technical Details</label>
+            <hr>
+            <div class="row">
+              <div class="col">
+                <label class="form-label">Airflow (CFM)</label>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Min" name="a1" [(ngModel)]="searchInfo.airflowMin">
+              </div>
+              --
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Max" name="a2" [(ngModel)]="searchInfo.airflowMax">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <label class="form-label">Max Power (W)</label>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Min" name="p1" [(ngModel)]="searchInfo.powerMin">
+              </div>
+              --
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Max" name="p2" [(ngModel)]="searchInfo.powerMax">
+              </div>
+            </div>
+            <br>  
+            <div class="row">
+              <div class="col">
+                <label class="form-label">Sound at max speed (dBA)</label>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Min" name="s1" [(ngModel)]="searchInfo.soundMin">
+              </div>
+              --
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Max" name="s2" [(ngModel)]="searchInfo.soundMax">
+              </div>
+            </div>
+            <br>
+            
+            <div class="row">
+              <div class="col">
+                <label class="form-label">Fan sweep diameter (in)</label>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Min" name="d1" [(ngModel)]="searchInfo.diameterMin">
+              </div>
+              --
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Max" name="d2" [(ngModel)]="searchInfo.diameterMax">
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="col">
+                <label class="form-label">Height (in)</label>
+              </div>
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Min" name="h1" [(ngModel)]="searchInfo.heightMin">
+              </div>
+              --
+              <div class="col">
+                <input type="text" class="form-control" placeholder="Max" name="h2" [(ngModel)]="searchInfo.heightMax">
+              </div>
+            </div>
+          </div>
+          
+          <hr>
+          <div class="mb-3">
+            <label style="font-size: 110%;">Brand</label>
+            <hr>
+            <div class="row">
+              <div class="col-4">
+                <label>Select Brands(s)</label>
+              </div>
+              <div class="col-8">
+                <select class="form-select" id="inputCategory">
+                  <option value="">HVAC Fans</option>
+                </select>
+              </div>
+            </div>            
+          </div>
+          <br>
+          <hr>
+          <div class="mb-3">
+            <label style="font-size: 110%;">
+              Other
+            </label>
+            <hr>
+            <div class="row">
+              <div class="col-4">
+                <label>With the words</label>
+              </div>
+              <div class="col-8">
+                <select class="form-select" id="inputCategory">
+                  <option value=""></option>
+              <option value="category1">Word 1</option>
+              <option value="category2">Word 2</option>
+              <option value="category3">Word 3</option>
+                </select>
+              </div>
+            </div>            
+          </div>
+          <br>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" (click)="advancedSearch()">Search</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

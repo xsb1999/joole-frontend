@@ -1,0 +1,144 @@
+<header>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/search">
+            <img src="../../assets/pics/joolePic.png" style="width: 68%">
+        </a>    
+  
+        <!-- Search input -->
+        <form class="d-flex">
+            <div class="input-group">
+                <select class="custom-select" style="width: 120px; border-radius: 3px; height: 43px;">
+                    <option value="1">HVAC Fans</option>
+                  </select>
+                <input style="width: 520px;" class="form-control me-2" type="search" placeholder="Advanced Search..." aria-label="Search">
+                <button style="margin-left: -8px;" class="btn btn-primary" type="submit" disabled>Search</button>
+            </div>
+        </form>
+        <div class="d-flex">
+            <button (click)="logOut()" style="float: right; margin-right: 40px" class="btn btn-dark">Log Out</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+  
+  <div style="margin-left: 18px; margin-top: 16px; color: #3b5998; font-weight: bold;">
+    Mechanical > HVAC Fans > <span style="color: #999;">Compare</span>
+    <hr>
+  </div><br>
+
+  <div style="margin-left: 30px;" class="row">
+
+    <div class="col-lg-9">
+
+      <table class="table table-striped">
+        <tr style="border-top: 2px solid #ccc;">
+          <td class="col-sm" style="background-color: #eee; padding: 5px; border-left: 2px solid #ccc;border-bottom: 2px solid #ccc;">FANS</td>
+          <td *ngFor="let product of productList" style="border-bottom: 2px solid #ccc; border-right: 2px solid #ccc;">
+            <img style="width: 50%;" [src]="product.manufacturer==='Emerson'?img1:(product.manufacturer==='Minka'?img2:(product.manufacturer==='Westinghouse'?img3:img4))">
+            <button style="float: right; margin-right: 5%; margin-top: 5%;" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+              <span class="sr-only">Add to </span>
+            </button>
+          </td>
+      </tr>
+        <br>
+
+        <h6>DESCRIPTION</h6>
+
+        <tr style="border-top: 2px solid #ccc;">
+            <td class="col-sm" style="background-color: #eee; padding: 5px; border-left: 2px solid #ccc;">Manufacturer</td>
+            <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+              {{product.manufacturer}}
+            </td>
+        </tr>
+        <tr>
+            <td class="col-sm" style="background-color: #eee; padding: 5px; border-left: 2px solid #ccc;">Series</td>
+            <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+              {{product.series}}
+            </td>
+        </tr>
+        <tr style="border-bottom: 2px solid #ccc;">
+            <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Model</td>
+            <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+              {{product.model}}
+            </td>        
+          </tr>
+          <br>
+          <h6>TYPE</h6>
+
+          <tr style="border-top: 2px solid #ccc;">
+            <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Use Type</td>
+            <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+              {{product.type}}
+            </td>  
+        </tr>
+        <tr>
+            <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Application</td>
+            <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+              {{product.application}}
+            </td> 
+        </tr>
+        <tr>
+            <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Mounting Location</td>
+            <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+              {{product.mountingLocation}}
+            </td>
+        </tr>
+        <tr>
+          <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Accessories</td>
+          <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+            {{product.accessories}}
+          </td>
+      </tr>
+      <tr style="border-bottom: 2px solid #ccc;">
+        <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Model year</td>
+        <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+          {{product.modelYear | slice:0:4}}
+        </td>
+    </tr>
+    <br>
+          <h6>TECHNICAL SPECIFICATIONS</h6>
+
+          <tr style="border-top: 2px solid #ccc; border-right: 2px solid #ccc; ">
+            <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Airflow (CFM)</td>
+            <td *ngFor="let product of productList" style="border-bottom: 1px solid #dee2e6; border-right: 2px solid #ccc;">
+              {{product.airflow}}
+            </td>
+        </tr>
+        <tr style="border-right: 2px solid #ccc;">
+            <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Power (W)</td>
+            <td *ngFor="let product of productList">
+              <span style="background-color: #eee; padding: 5px; margin-right: 20px;">Min</span>
+              <span>{{product.powerMin}}</span>
+              <span style="background-color: #eee; padding: 5px;margin-left: 30px;margin-right: 20px;">Max</span>
+              <span>{{product.power}}</span>
+            </td>
+        </tr>
+        <tr style="border-right: 2px solid #ccc;">
+          <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Operating voltage (VAC)</td>
+            <td *ngFor="let product of productList">
+              <span style="background-color: #eee; padding: 5px; margin-right: 15px;">Min</span>
+              <span>{{product.operatingVoltageMin}}</span>
+              <span style="background-color: #eee; padding: 5px;margin-left: 20px;margin-right: 20px;">Max</span>
+              <span>{{product.operatingVoltage}}</span>
+            </td>    
+          </tr>
+        <tr style="border-bottom: 2px solid #ccc;border-right: 2px solid #ccc;">
+          <td class="col-sm" style="background-color: #eee; padding: 5px;border-left: 2px solid #ccc;">Fan speed (RPM)</td>
+            <td *ngFor="let product of productList">
+              <span style="background-color: #eee; padding: 5px; margin-right: 20px;">Min</span>
+              <span>{{product.fanSpeedMin}}</span>
+              <span style="background-color: #eee; padding: 5px;margin-left: 20px;margin-right: 20px;">Max</span>
+              <span>{{product.fanSpeed}}</span>
+            </td>      
+          </tr>
+
+
+
+      </table>
+    </div>
+
+    
+  </div>
+  <br><br><br>
